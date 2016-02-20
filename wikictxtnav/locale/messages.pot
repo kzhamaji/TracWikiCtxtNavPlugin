@@ -1,0 +1,41 @@
+# Translations template for TracWikiCtxtNavPlugin.
+# Copyright (C) 2016 ORGANIZATION
+# This file is distributed under the same license as the
+# TracWikiCtxtNavPlugin project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TracWikiCtxtNavPlugin 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2016-02-20 20:48+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.2.0\n"
+
+#: wikictxtnav/templates/wikicreate.html:11
+#: wikictxtnav/templates/wikicreate.html:15
+msgid "Create new page"
+msgstr ""
+
+#: wikictxtnav/templates/wikicreate.html:20
+msgid "New page name:"
+msgstr ""
+
+#: wikictxtnav/templates/wikicreate.html:24
+msgid "Using the template':"
+msgstr ""
+
+#: wikictxtnav/templates/wikicreate.html:27
+msgid "(blank page)"
+msgstr ""
+
+#: wikictxtnav/templates/wikicreate.html:35
+msgid "Create page"
+msgstr ""
+

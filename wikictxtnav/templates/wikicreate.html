@@ -3,11 +3,12 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xi="http://www.w3.org/2001/XInclude"
-      xmlns:py="http://genshi.edgewall.org/">
-
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:i18n="http://genshi.edgewall.org/i18n" i18n:domain="wikictxtnav">
   <xi:include href="layout.html" />
+
   <head>
-    <title>Wiki Create</title>
+    <title>Create new page</title>
   </head>
 
   <body>
@@ -20,10 +21,10 @@
           <input type="text" name="new_page" value="${dest}" />
         </div>
         <div py:if="templates" id="template">
-        <label for="template">${_('Using the template')}:</label>
+        <label for="template">Using the template':</label>
         <select name="template">
             <option selected="${not default_template in templates and 'selected' or None}"
-                    value="">${_('(blank page)')}</option>
+                    value="">(blank page)</option>
             <option py:for="t in sorted(templates)"
                     selected="${t == default_template or None}">$t</option>
         </select>
@@ -31,7 +32,7 @@
       </fieldset>
       <div class="buttons">
         <input type="hidden" name="redirect" value="${redir and '1' or '0'}" />
-        <input type="submit" name="submit" value="Create" />
+        <button type="submit" name="submit" value="Create page">Create page</button>
       </div>
     </form> 
   </body>

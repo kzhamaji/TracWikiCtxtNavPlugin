@@ -1,5 +1,22 @@
 from setuptools import setup
 
+extra = {}
+
+try:
+    from trac.util.dist  import  get_l10n_cmdclass
+    cmdclass = get_l10n_cmdclass()
+    if cmdclass:
+        extra['cmdclass'] = cmdclass
+        extractors = [
+#            ('**.py',                'python', None),
+            ('**/templates/**.html', 'genshi', None),
+        ]
+        extra['message_extractors'] = {
+            'wikictxtnav': extractors,
+        }
+except:
+    pass
+
 setup(
     name='TracWikiCtxtNavPlugin',
     #description='',
@@ -14,6 +31,7 @@ setup(
     package_data={
         'wikictxtnav': [
             'templates/*.html',
+            'locale/*/LC_MESSAGES/*.mo',
         ]
     },
     entry_points={
@@ -21,5 +39,6 @@ setup(
             'wikictxtnav.wikicreate = wikictxtnav.wikicreate',
             'wikictxtnav.wikiedit = wikictxtnav.wikiedit',
         ]
-    }
+    },
+    **extra
 )

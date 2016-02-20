@@ -9,16 +9,26 @@ from trac.web.chrome import ITemplateProvider, add_ctxtnav
 from trac.web.api import IRequestFilter
 from genshi.core import Markup
 
-from trac.wiki import WikiSystem
+from trac.wiki import WikiSystem, validate_page_name
+
+from trac.util.translation import _, add_domain
 
 class WikiCreateModule(Component):
-    """An evil module that adds a rename button to the wiki UI."""
- 
+
     implements(IRequestHandler, ITemplateProvider, IRequestFilter)
-    
+
     PAGE_TEMPLATES_PREFIX = 'PageTemplates/'
     DEFAULT_PAGE_TEMPLATE = 'DefaultPage'
-    
+
+    def __init__ (self):
+        import pkg_resources
+        try:
+            locale_dir = pkg_resources.resource_filename(__name__, 'locale')
+        except KeyError:
+            pass
+        else:
+            add_domain('wikictxtnav', self.env.path, locale_dir)
+
     # IRequestHandler methods
     def match_request (self, req):
         return req.path_info == '/wikicreate'
@@ -27,18 +37,19 @@ class WikiCreateModule(Component):
         req.perm.require('WIKI_CREATE')
 
         if req.method == 'POST':
-            new_page = urllib.unquote_plus(req.args.get('new_page',''))
+            pagename = urllib.unquote_plus(req.args.get('new_page',''))
             template = req.args.get('template', '')
-        
-            if not new_page:
-                raise TracError, "Please provide a new page name"
+
+            if not validate_page_name(pagename):
+                raise TracError(_("Invalid Wiki page name '%(name)s'",
+                                name=pagename))
 
             # check existence
-            if WikiSystem(self.env).has_page(new_page):
-                raise TracError, "Page exists"
+            if WikiSystem(self.env).has_page(pagename):
+                raise TracError, _("The page %(name)s already exists.", name=pagename)
 
             # redirect
-            req.redirect(req.href.wiki(new_page, action='edit', template=template))
+            req.redirect(req.href.wiki(pagename, action='edit', template=template))
 
         # add templates
         prefix = self.PAGE_TEMPLATES_PREFIX
@@ -70,6 +81,6 @@ class WikiCreateModule(Component):
             page = data['page']
             perm = req.perm(page.resource)
             if 'WIKI_CREATE' in perm or 'WIKI_ADMIN' in perm:
-                href = req.href('wikicreate') 
-                add_ctxtnav(req, 'Create', href)
+                href = req.href('wikicreate')
+                add_ctxtnav(req, _('Create'), href)
         return template, data, content_type
