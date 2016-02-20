@@ -1,0 +1,38 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:py="http://genshi.edgewall.org/">
+
+  <xi:include href="layout.html" />
+  <head>
+    <title>Wiki Create</title>
+  </head>
+
+  <body>
+    <h2>Create new page</h2>
+
+    <form class="mod" id="modwikicreate" action="${href('wikicreate')}" method="post">
+      <fieldset>
+        <div class="field">
+          <label for="new_page">New page name:</label>
+          <input type="text" name="new_page" value="${dest}" />
+        </div>
+        <div py:if="templates" id="template">
+        <label for="template">${_('Using the template')}:</label>
+        <select name="template">
+            <option selected="${not default_template in templates and 'selected' or None}"
+                    value="">${_('(blank page)')}</option>
+            <option py:for="t in sorted(templates)"
+                    selected="${t == default_template or None}">$t</option>
+        </select>
+        </div>
+      </fieldset>
+      <div class="buttons">
+        <input type="hidden" name="redirect" value="${redir and '1' or '0'}" />
+        <input type="submit" name="submit" value="Create" />
+      </div>
+    </form> 
+  </body>
+</html>
